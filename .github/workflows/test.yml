@@ -1,19 +1,19 @@
-name: Проверка кода (CI)
+name: Проверка Python кода
 on:
   pull_request:
     branches: [ main ]
 
 jobs:
-  test-button:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Скачиваем код
         uses: actions/checkout@v4
 
-      - name: Проверяем наличие кнопки
-        run: |
-          if grep -q "<button>" index.html; then
-            echo "Тест пройден: кнопка на месте!"
-          else
-            echo "Ошибка: кнопка не найдена в index.html!" && exit 1
-          fi
+      - name: Настраиваем Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+        
+      - name: Запускаем наш тест
+        run: python test_calculator.py
